@@ -1,2 +1,2 @@
 # simon-game
-Google "Simon Game" for game rules!
+Search "Simon Game" for game rules!
