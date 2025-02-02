@@ -2,7 +2,7 @@ var buttonColors = ["red", "blue", "green", "yellow"];
 var gamePattern = [];
 var userPattern = [];
 var level = 0;
-var gameStarted = false, gameOver = false;
+var gameStarted = false, clickBlocked = false;
 
 $(document).keypress(function() {
     if (!gameStarted) {
@@ -12,7 +12,7 @@ $(document).keypress(function() {
 });
 
 $(".btn").click(function() {
-    if (!gameStarted || gameOver) {
+    if (!gameStarted || clickBlocked) {
         return;
     }
     var userChosenColor = $(this).attr("id");
@@ -25,6 +25,7 @@ $(".btn").click(function() {
 function checkAnswer(currentLevel) {
     if (gamePattern[currentLevel] === userPattern[currentLevel]) {
         if (gamePattern.length === userPattern.length) {
+            clickBlocked = true;
             setTimeout(function() {
                 nextSequence();
             }, 1000);
@@ -45,10 +46,11 @@ function startOver() {
     gamePattern = [];
     userPattern = [];
     gameStarted = false;
-    gameOver = false;
+    clickBlocked = false;
 }
 
 function nextSequence() {
+    clickBlocked = false;
     userPattern = [];
     level++;
     $("#level-title").text(`Level ${level}`);
